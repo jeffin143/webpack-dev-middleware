@@ -775,11 +775,16 @@ describe('middleware', () => {
             for (const { value, contentType, code } of urls) {
               // eslint-disable-next-line no-loop-func
               it(`should return the "${code}" code for the "GET" request for the "${value}" url`, (done) => {
-                request(app)
-                  .get(`${publicPathForRequest}${value}`)
-                  .expect('Content-Type', contentType)
-                  .expect('Content-Length', data ? String(data.length) : /\d+/)
-                  .expect(code, done);
+                setTimeout(() => {
+                  request(app)
+                    .get(`${publicPathForRequest}${value}`)
+                    .expect('Content-Type', contentType)
+                    .expect(
+                      'Content-Length',
+                      data ? String(data.length) : /\d+/
+                    )
+                    .expect(code, done);
+                });
               });
             }
           }
